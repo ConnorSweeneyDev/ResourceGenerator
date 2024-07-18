@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     while (std::getline(resource_file, line)) { resource_content += line + "\n"; }
     resource_file.close();
 
+    resource_name = resource_name.substr(resource_name.find_last_of('/') + 1);
     generated_file_content +=
       "constexpr char " + resource_name + postfix + "[] = R\"(\n" + resource_content + ")\";\n";
   }
