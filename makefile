@@ -14,7 +14,7 @@ ifeq ($(OS), Windows_NT)
 else
   ifeq ($(UNAME), Linux)
     ECHO = echo
-    OUTPUT = binary/linux/SimpleGameEngine.out
+    OUTPUT = binary/linux/ResourceLoader.out
   endif
   #ifeq ($(UNAME), Darwin)
   #endif
