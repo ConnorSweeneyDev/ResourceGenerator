@@ -7,9 +7,9 @@ CXX = g++
 CXXFLAGS = -g -O2 -std=c++20 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fstack-protector-strong
 
 WARNINGS = -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wcast-qual -Wcast-align -Wfloat-equal -Wlogical-op -Wduplicated-cond -Wshift-overflow=2 -Wformat=2
+LIBRARIES = -static
 ifeq ($(OS), Windows_NT)
   ECHO = echo -e
-  LIBRARIES = -static -Wl,-Bstatic -lgcc -lstdc++ -lssp -lwinpthread -Wl,-Bdynamic
   OUTPUT = binary/windows/ResourceLoader.exe
 else
   ifeq ($(UNAME), Linux)
