@@ -5,7 +5,7 @@ in a c++ header file.
 ## Usage
 `<resource1> <resource2> ... <resourceN> <postfix> <outfile>`
 
-- `<resource1> <resource2> ... <resourceN>`: The files to be read.
+- `<resource1> <resource2> ... <resourceN>`: The files to be read, text files or png files.
 - `<postfix>`: The postfix to append to each constexpr char array name, e.g. `_resource`.
 - `<outfile>`: The `.hpp` file to write the output to, can be a path to a file or just a filename.
 
