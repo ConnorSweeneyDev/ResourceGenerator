@@ -2,9 +2,29 @@ ifneq ($(OS), Windows_NT)
   UNAME := $(shell uname -s)
 endif
 
+COMMANDS_DIRECTORY = compile_commands.json
+FORMAT_DIRECTORY = .clang-format
+STYLE = BasedOnStyle: LLVM
+TAB_WIDTH = IndentWidth: 2
+INITIALIZER_WIDTH = ConstructorInitializerIndentWidth: 2
+CONTINUATION_WIDTH = ContinuationIndentWidth: 2
+BRACES = BreakBeforeBraces: Allman
+LANGUAGE = Language: Cpp
+LIMIT = ColumnLimit: 100
+BLOCKS = AllowShortBlocksOnASingleLine: true
+FUNCTIONS = AllowShortFunctionsOnASingleLine: true
+IFS = AllowShortIfStatementsOnASingleLine: true
+LOOPS = AllowShortLoopsOnASingleLine: true
+CASE_LABELS = AllowShortCaseLabelsOnASingleLine: true
+PP_DIRECTIVES = IndentPPDirectives: BeforeHash
+NAMESPACE_INDENTATION = NamespaceIndentation: All
+NAMESPACE_COMMENTS = FixNamespaceComments: false
+INDENT_CASE_LABELS = IndentCaseLabels: true
+BREAK_TEMPLATE_DECLARATIONS = AlwaysBreakTemplateDeclarations: false
+
 CXX = g++
-#CXXFLAGS = -s -O3 -std=c++20 -DNDEBUG -D_FORTIFY_SOURCE=2 -fstack-protector-strong
-CXXFLAGS = -g -O2 -std=c++20 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fstack-protector-strong
+CXXFLAGS = -s -O3 -std=c++20 -DNDEBUG -D_FORTIFY_SOURCE=2 -fstack-protector-strong
+#CXXFLAGS = -g -O2 -std=c++20 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fstack-protector-strong
 
 WARNINGS = -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wcast-qual -Wcast-align -Wfloat-equal -Wlogical-op -Wduplicated-cond -Wshift-overflow=2 -Wformat=2
 LIBRARIES = -static
@@ -27,26 +47,6 @@ WINDOWS_DIRECTORY = binary/windows
 LINUX_DIRECTORY = binary/linux
 CPP_SOURCES = $(wildcard $(PROGRAM_SOURCE_DIRECTORY)/*.cpp)
 OBJECTS = $(patsubst $(PROGRAM_SOURCE_DIRECTORY)/%.cpp,$(OBJECTS_DIRECTORY)/%.o,$(CPP_SOURCES))
-
-COMMANDS_DIRECTORY = compile_commands.json
-FORMAT_DIRECTORY = .clang-format
-STYLE = BasedOnStyle: LLVM
-TAB_WIDTH = IndentWidth: 2
-INITIALIZER_WIDTH = ConstructorInitializerIndentWidth: 2
-CONTINUATION_WIDTH = ContinuationIndentWidth: 2
-BRACES = BreakBeforeBraces: Allman
-LANGUAGE = Language: Cpp
-LIMIT = ColumnLimit: 100
-BLOCKS = AllowShortBlocksOnASingleLine: true
-FUNCTIONS = AllowShortFunctionsOnASingleLine: true
-IFS = AllowShortIfStatementsOnASingleLine: true
-LOOPS = AllowShortLoopsOnASingleLine: true
-CASE_LABELS = AllowShortCaseLabelsOnASingleLine: true
-PP_DIRECTIVES = IndentPPDirectives: BeforeHash
-NAMESPACE_INDENTATION = NamespaceIndentation: All
-NAMESPACE_COMMENTS = FixNamespaceComments: false
-INDENT_CASE_LABELS = IndentCaseLabels: true
-BREAK_TEMPLATE_DECLARATIONS = AlwaysBreakTemplateDeclarations: false
 
 all: compile_commands clang-format directories $(OUTPUT)
 
@@ -71,7 +71,7 @@ directories:
 $(OBJECTS_DIRECTORY)/%.o: $(PROGRAM_SOURCE_DIRECTORY)/%.cpp | directories compile_commands clang-format
 	@$(CXX) $(CXXFLAGS) $(WARNINGS) -c $< -o $@
 	@$(ECHO) "CXX   | $< -> $@"
-$(OUTPUT): $(OBJECTS)
+$(OUTPUT): $(OBJECTS) | directories compile_commands clang-format
 	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(OBJECTS) $(LIBRARIES) -o $(OUTPUT)
 	@$(ECHO) "Link  | $(OBJECTS) -> $(OUTPUT)"
 
