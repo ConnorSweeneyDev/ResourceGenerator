@@ -51,6 +51,7 @@ int main(int argc, char *argv[])
         return 1;
       }
 
+      resource_name = resource_name.substr(resource_name.find_last_of('/') + 1);
       resource_content += "constexpr int " + resource_name + postfix + "_width" + " = " +
                           std::to_string(width) + ";\n";
       resource_content += "constexpr int " + resource_name + postfix + "_height" + " = " +
