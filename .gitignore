@@ -12,6 +12,9 @@ compile_commands.json
 .clang-format
 .cache
 
+# Generated files
+output.hpp
+
 # Precompiled Headers
 *.gch
 *.pch
