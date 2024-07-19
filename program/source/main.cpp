@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
     if (resource_extension == "png")
     {
       int width, height, channels;
+      stbi_set_flip_vertically_on_load(true);
       unsigned char *data = stbi_load(resource_path.c_str(), &width, &height, &channels, 0);
       if (data == nullptr)
       {
