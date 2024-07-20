@@ -3,11 +3,16 @@ A small executable that reads all the files supplied to it and outputs them as c
 in a c++ header file.
 
 ## Usage
-`<resource1> <resource2> ... <resourceN> <postfix> <outfile>`
+`Usage: <resource1> <resource2> ... <resourceN> <postfix> <outhppfile> <outcppfile> <cxxflags> <outofile>`
 
 - `<resource1> <resource2> ... <resourceN>`: The files to be read, text files or png files.
 - `<postfix>`: The postfix to append to each constexpr char array name, e.g. `_resource`.
-- `<outfile>`: The `.hpp` file to write the output to, can be a path to a file or just a filename.
+- `<outhppfile>`: The `.hpp` file to write the output to, can be a path to a file or just a filename.
+- `<outcppfile>`: The `.cpp` file to write the output to, can be a path to a file or just a
+  filename.
+- `<cxxflags>`: The flags to use when compiling the output file. Should be surrounded by quotes,
+  `-c`, `-I` and `-o` are handled automatically.
+- `<outofile>`: The `.o` file to compile, can be a path to a file or just a filename.
 
 ## Building
 This can be built on windows or linux using the scripts in the `script` directory, but I have
