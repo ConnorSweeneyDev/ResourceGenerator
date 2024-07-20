@@ -8,14 +8,14 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-std::string char_to_hex(unsigned char ch)
+std::string unsigned_char_to_hex(unsigned char ch)
 {
   std::stringstream ss;
   ss << "0x" << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(ch);
   return ss.str();
 }
 
-std::vector<unsigned char> read_binary_file(const std::string &filename)
+std::vector<unsigned char> read_text_file_as_binary(const std::string &filename)
 {
   std::ifstream file(filename, std::ios::binary | std::ios::ate);
   if (!file.is_open()) { throw std::runtime_error("Could not open file"); }
@@ -97,7 +97,7 @@ int main(int argc, char *argv[])
       size_t data_size = size_t(width * height * channels);
       for (size_t i = 0; i < data_size; i++)
       {
-        resource_cpp_content += char_to_hex(data[i]) + ", ";
+        resource_cpp_content += unsigned_char_to_hex(data[i]) + ", ";
         if ((i + 1) % 16 == 0) { resource_cpp_content += "\n"; }
       }
       resource_cpp_content += "};\n";
@@ -112,10 +112,10 @@ int main(int argc, char *argv[])
       resource_hpp_content += "\nextern const char " + resource_name + postfix + "[];\n";
       generated_hpp_file_content += resource_hpp_content;
 
-      std::vector<unsigned char> buffer = read_binary_file(resource_path);
+      std::vector<unsigned char> buffer = read_text_file_as_binary(resource_path);
       for (size_t i = 0; i < buffer.size(); i++)
       {
-        resource_cpp_content += char_to_hex(buffer[i]) + ", ";
+        resource_cpp_content += unsigned_char_to_hex(buffer[i]) + ", ";
         if ((i + 1) % 16 == 0) { resource_cpp_content += "\n"; }
       }
       generated_cpp_file_content +=
