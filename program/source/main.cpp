@@ -1,4 +1,3 @@
-#include <filesystem>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -146,9 +145,9 @@ int main(int argc, char *argv[])
     generated_cpp_file_name.substr(generated_cpp_file_name.find_last_of('/') + 1);
   object_file_name = object_file_name.substr(0, object_file_name.find_last_of('.'));
 
-  std::filesystem::path hpp_path(generated_hpp_file_name);
-  std::string include_path = hpp_path.parent_path().string();
-  bool is_path = std::filesystem::is_directory(include_path);
+  bool is_path = generated_hpp_file_name.find('/') != std::string::npos;
+  std::string include_path =
+    generated_hpp_file_name.substr(0, generated_hpp_file_name.find_last_of('/'));
   std::string command = "g++ " + cxx_flags + (is_path ? " -I" + include_path : "") + " -c " +
                         generated_cpp_file_name + " -o " + generated_o_file_name;
   system(command.c_str());
