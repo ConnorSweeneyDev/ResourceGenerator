@@ -150,7 +150,7 @@ int main(int argc, char *argv[])
     generated_hpp_file_name.substr(0, generated_hpp_file_name.find_last_of('/'));
   std::string command = "g++ " + cxx_flags + (is_path ? " -I" + include_path : "") + " -c " +
                         generated_cpp_file_name + " -o " + generated_o_file_name;
-  system(command.c_str());
+  int compile_result = system(command.c_str());
 
-  return 0;
+  return compile_result;
 }
