@@ -117,8 +117,8 @@ int main(int argc, char *argv[])
         resource_cpp_content += unsigned_char_to_hex(buffer[i]) + ", ";
         if ((i + 1) % 16 == 0) { resource_cpp_content += "\n"; }
       }
-      generated_cpp_file_content +=
-        "\nconst char " + resource_name + postfix + "[] = {\n" + resource_cpp_content + "};\n";
+      generated_cpp_file_content += "\nconst char " + resource_name + postfix + "[] = {\n" +
+                                    resource_cpp_content + "'\\0' };\n";
     }
     resource_file.close();
   }
