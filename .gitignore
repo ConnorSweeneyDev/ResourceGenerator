@@ -15,7 +15,6 @@ compile_commands.json
 # Generated files
 output.hpp
 output.cpp
-output.o
 
 # Precompiled Headers
 *.gch
