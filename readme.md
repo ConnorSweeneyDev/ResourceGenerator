@@ -3,14 +3,15 @@ A small executable that reads all the files supplied to it and outputs them as c
 a c++ compilation unit.
 
 ## Usage
-`Usage: <postfix> <resource1> <resource2> ... <resourceN> <outhppfile> <outcppfile>`
+`Usage: <postfix> <resource1> <resource2> ... <resourceN> <outfile>`
 
 - `<postfix>`: The postfix to append to each constexpr char array name, e.g. `_resource`.
 - `<resource1> <resource2> ... <resourceN>`: The files to be read, text files or png files.
-- `<outhppfile>`: The `.hpp` file to write the output to, can be a path to a file or just a
+- `<outfile>`: The `.hpp` or `.cpp` file to write the output to, can be a path to a file or just a
   filename.
-- `<outcppfile>`: The `.cpp` file to write the output to, can be a path to a file or just a
-  filename.
+
+Run it once with the desired header file path and once with the desired source file path, keeping
+all the other arguments the same.
 
 ## Building
 This can be built on windows or linux using the scripts in the `script` directory, but I have
