@@ -74,7 +74,7 @@ directories:
 $(OBJECTS_DIRECTORY)/%.o: $(PROGRAM_SOURCE_DIRECTORY)/%.cpp | directories
 	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(SYSTEM_INCLUDES) -c $< -o $@
 	@$(ECHO) "CXX   | $< -> $@"
-$(OUTPUT): $(OBJECTS) | directories
+$(OUTPUT): $(OBJECTS)
 	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(SYSTEM_INCLUDES) $(OBJECTS) $(LIBRARIES) -o $(OUTPUT)
 	@$(ECHO) "Link  | $(OBJECTS) -> $(OUTPUT)"
 
