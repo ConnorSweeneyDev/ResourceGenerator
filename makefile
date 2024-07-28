@@ -4,50 +4,50 @@ else
   UNAME := $(shell uname -s)
 endif
 
-CXX = g++
-CXXFLAGS = -s -O3 -std=c++17 -DNDEBUG -D_FORTIFY_SOURCE=2 -fstack-protector-strong
-#CXXFLAGS = -g -O2 -std=c++17 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fstack-protector-strong
+CXX := g++
+CXXFLAGS := -s -O3 -std=c++17 -DNDEBUG -D_FORTIFY_SOURCE=2 -fstack-protector-strong
+#CXXFLAGS := -g -O2 -std=c++17 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fstack-protector-strong
 
-WARNINGS = -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wcast-qual -Wcast-align -Wfloat-equal -Wlogical-op -Wduplicated-cond -Wshift-overflow=2 -Wformat=2
-SYSTEM_INCLUDES = -isystemexternal/include -isystemexternal/include/stb
-LIBRARIES = -static
+WARNINGS := -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wcast-qual -Wcast-align -Wfloat-equal -Wlogical-op -Wduplicated-cond -Wshift-overflow=2 -Wformat=2
+SYSTEM_INCLUDES := -isystemexternal/include -isystemexternal/include/stb
+LIBRARIES := -static
 ifeq ($(UNAME), Windows)
-  ECHO = echo -e
-  TARGET_DIRECTORY = binary/windows
-  OUTPUT = binary/windows/ResourceLoader.exe
+  ECHO := echo -e
+  TARGET_DIRECTORY := binary/windows
+  OUTPUT := $(TARGET_DIRECTORY)/ResourceLoader.exe
 else ifeq ($(UNAME), Linux)
-  ECHO = echo
-  TARGET_DIRECTORY = binary/linux
-  OUTPUT = binary/linux/ResourceLoader.out
+  ECHO := echo
+  TARGET_DIRECTORY := binary/linux
+  OUTPUT := $(TARGET_DIRECTORY)/ResourceLoader.out
 #else ifeq ($(UNAME), Darwin)
 endif
 
-PROGRAM_SOURCE_DIRECTORY = program/source
-BINARY_DIRECTORY = binary
-OBJECTS_DIRECTORY = binary/object
-CPP_SOURCES = $(wildcard $(PROGRAM_SOURCE_DIRECTORY)/*.cpp)
-OBJECTS = $(patsubst $(PROGRAM_SOURCE_DIRECTORY)/%.cpp,$(OBJECTS_DIRECTORY)/%.o,$(CPP_SOURCES))
+PROGRAM_SOURCE_DIRECTORY := program/source
+BINARY_DIRECTORY := binary
+OBJECTS_DIRECTORY := binary/object
+CPP_SOURCES := $(wildcard $(PROGRAM_SOURCE_DIRECTORY)/*.cpp)
+OBJECTS := $(patsubst $(PROGRAM_SOURCE_DIRECTORY)/%.cpp,$(OBJECTS_DIRECTORY)/%.o,$(CPP_SOURCES))
 
-COMMANDS_DIRECTORY = compile_commands.json
-FORMAT_DIRECTORY = .clang-format
-STYLE = BasedOnStyle: LLVM
-TAB_WIDTH = IndentWidth: 2
-INITIALIZER_WIDTH = ConstructorInitializerIndentWidth: 2
-CONTINUATION_WIDTH = ContinuationIndentWidth: 2
-BRACES = BreakBeforeBraces: Allman
-LANGUAGE = Language: Cpp
-LIMIT = ColumnLimit: 100
-BLOCKS = AllowShortBlocksOnASingleLine: true
-FUNCTIONS = AllowShortFunctionsOnASingleLine: true
-IFS = AllowShortIfStatementsOnASingleLine: true
-LOOPS = AllowShortLoopsOnASingleLine: true
-CASE_LABELS = AllowShortCaseLabelsOnASingleLine: true
-PP_DIRECTIVES = IndentPPDirectives: BeforeHash
-NAMESPACE_INDENTATION = NamespaceIndentation: All
-NAMESPACE_COMMENTS = FixNamespaceComments: false
-INDENT_CASE_LABELS = IndentCaseLabels: true
-BREAK_TEMPLATE_DECLARATIONS = AlwaysBreakTemplateDeclarations: false
-FORMAT_FILES = $(wildcard $(PROGRAM_SOURCE_DIRECTORY)/*.cpp)
+COMMANDS_DIRECTORY := compile_commands.json
+FORMAT_DIRECTORY := .clang-format
+STYLE := BasedOnStyle: LLVM
+TAB_WIDTH := IndentWidth: 2
+INITIALIZER_WIDTH := ConstructorInitializerIndentWidth: 2
+CONTINUATION_WIDTH := ContinuationIndentWidth: 2
+BRACES := BreakBeforeBraces: Allman
+LANGUAGE := Language: Cpp
+LIMIT := ColumnLimit: 100
+BLOCKS := AllowShortBlocksOnASingleLine: true
+FUNCTIONS := AllowShortFunctionsOnASingleLine: true
+IFS := AllowShortIfStatementsOnASingleLine: true
+LOOPS := AllowShortLoopsOnASingleLine: true
+CASE_LABELS := AllowShortCaseLabelsOnASingleLine: true
+PP_DIRECTIVES := IndentPPDirectives: BeforeHash
+NAMESPACE_INDENTATION := NamespaceIndentation: All
+NAMESPACE_COMMENTS := FixNamespaceComments: false
+INDENT_CASE_LABELS := IndentCaseLabels: true
+BREAK_TEMPLATE_DECLARATIONS := AlwaysBreakTemplateDeclarations: false
+FORMAT_FILES := $(wildcard $(PROGRAM_SOURCE_DIRECTORY)/*.cpp)
 
 main: directories $(OUTPUT)
 external: compile_commands clang-format directories
