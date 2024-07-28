@@ -9,6 +9,7 @@ CXXFLAGS := -s -O3 -std=c++17 -DNDEBUG -D_FORTIFY_SOURCE=2 -fstack-protector-str
 #CXXFLAGS := -g -O2 -std=c++17 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fstack-protector-strong
 
 WARNINGS := -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wcast-qual -Wcast-align -Wfloat-equal -Wlogical-op -Wduplicated-cond -Wshift-overflow=2 -Wformat=2
+INCLUDES := -Iprogram/include
 SYSTEM_INCLUDES := -isystemexternal/include -isystemexternal/include/stb
 LIBRARIES := -static
 ifeq ($(UNAME), Windows)
@@ -54,7 +55,7 @@ external: compile_commands clang-format directories
 
 compile_commands:
 	@$(ECHO) "[" > $(COMMANDS_DIRECTORY)
-	@for source in $(CPP_SOURCES); do $(ECHO) "\t{ \"directory\": \"$(CURDIR)\", \"command\": \"$(CXX) $(CXXFLAGS) $(WARNINGS) $(SYSTEM_INCLUDES) -c $$source -o $(OBJECTS_DIRECTORY)/$$(basename $$source .cpp).o\", \"file\": \"$$source\" },"; done >> $(COMMANDS_DIRECTORY)
+	@for source in $(CPP_SOURCES); do $(ECHO) "\t{ \"directory\": \"$(CURDIR)\", \"command\": \"$(CXX) $(CXXFLAGS) $(WARNINGS) $(INCLUDES) $(SYSTEM_INCLUDES) -c $$source -o $(OBJECTS_DIRECTORY)/$$(basename $$source .cpp).o\", \"file\": \"$$source\" },"; done >> $(COMMANDS_DIRECTORY)
 	@sed -i "$$ s/,$$//" $(COMMANDS_DIRECTORY)
 	@$(ECHO) "]" >> $(COMMANDS_DIRECTORY)
 	@$(ECHO) "Write | $(COMMANDS_DIRECTORY)"
@@ -71,10 +72,10 @@ directories:
 	@if [ ! -d $(TARGET_DIRECTORY) ]; then mkdir -p $(TARGET_DIRECTORY); $(ECHO) "Write | $(TARGET_DIRECTORY)"; fi
 
 $(OBJECTS_DIRECTORY)/%.o: $(PROGRAM_SOURCE_DIRECTORY)/%.cpp | directories
-	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(SYSTEM_INCLUDES) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(INCLUDES) $(SYSTEM_INCLUDES) -c $< -o $@
 	@$(ECHO) "CXX   | $< -> $@"
 $(OUTPUT): $(OBJECTS)
-	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(SYSTEM_INCLUDES) $(OBJECTS) $(LIBRARIES) -o $(OUTPUT)
+	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(INCLUDES) $(SYSTEM_INCLUDES) $(OBJECTS) $(LIBRARIES) -o $(OUTPUT)
 	@$(ECHO) "Link  | $(OBJECTS) -> $(OUTPUT)"
 
 clean:
