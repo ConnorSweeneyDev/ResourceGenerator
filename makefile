@@ -13,9 +13,11 @@ SYSTEM_INCLUDES = -isystemexternal/include -isystemexternal/include/stb
 LIBRARIES = -static
 ifeq ($(UNAME), Windows)
   ECHO = echo -e
+  TARGET_DIRECTORY = binary/windows
   OUTPUT = binary/windows/ResourceLoader.exe
 else ifeq ($(UNAME), Linux)
   ECHO = echo
+  TARGET_DIRECTORY = binary/linux
   OUTPUT = binary/linux/ResourceLoader.out
 #else ifeq ($(UNAME), Darwin)
 endif
@@ -23,8 +25,6 @@ endif
 PROGRAM_SOURCE_DIRECTORY = program/source
 BINARY_DIRECTORY = binary
 OBJECTS_DIRECTORY = binary/object
-WINDOWS_DIRECTORY = binary/windows
-LINUX_DIRECTORY = binary/linux
 CPP_SOURCES = $(wildcard $(PROGRAM_SOURCE_DIRECTORY)/*.cpp)
 OBJECTS = $(patsubst $(PROGRAM_SOURCE_DIRECTORY)/%.cpp,$(OBJECTS_DIRECTORY)/%.o,$(CPP_SOURCES))
 
@@ -68,8 +68,7 @@ clang-format:
 directories:
 	@if [ ! -d $(BINARY_DIRECTORY) ]; then mkdir -p $(BINARY_DIRECTORY); $(ECHO) "Write | $(BINARY_DIRECTORY)"; fi
 	@if [ ! -d $(OBJECTS_DIRECTORY) ]; then mkdir -p $(OBJECTS_DIRECTORY); $(ECHO) "Write | $(OBJECTS_DIRECTORY)"; fi
-	@if [ ! -d $(WINDOWS_DIRECTORY) ]; then mkdir -p $(WINDOWS_DIRECTORY); $(ECHO) "Write | $(WINDOWS_DIRECTORY)"; fi
-	@if [ ! -d $(LINUX_DIRECTORY) ]; then mkdir -p $(LINUX_DIRECTORY); $(ECHO) "Write | $(LINUX_DIRECTORY)"; fi
+	@if [ ! -d $(TARGET_DIRECTORY) ]; then mkdir -p $(TARGET_DIRECTORY); $(ECHO) "Write | $(TARGET_DIRECTORY)"; fi
 
 $(OBJECTS_DIRECTORY)/%.o: $(PROGRAM_SOURCE_DIRECTORY)/%.cpp | directories
 	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(SYSTEM_INCLUDES) -c $< -o $@
