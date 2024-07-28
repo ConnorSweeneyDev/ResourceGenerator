@@ -19,7 +19,7 @@ else ifeq ($(UNAME), Linux)
   OUTPUT = binary/linux/ResourceLoader.out
 #else ifeq ($(UNAME), Darwin)
 else
-	$(error "Unknown OS")
+	$(error Unsupported OS)
 endif
 
 PROGRAM_SOURCE_DIRECTORY = program/source
