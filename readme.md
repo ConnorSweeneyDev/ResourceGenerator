@@ -3,7 +3,7 @@ A small executable that reads all the files supplied to it and outputs them as c
 a c++ compilation unit.
 
 ## Usage
-`Usage: <postfix> <resource1> <resource2> ... <resourceN> <outfile>`
+`<postfix> <resource1> <resource2> ... <resourceN> <outfile>`
 
 - `<postfix>`: The postfix to append to each constexpr char array name, e.g. `_resource`.
 - `<resource1> <resource2> ... <resourceN>`: The files to be read, text files or png files.
