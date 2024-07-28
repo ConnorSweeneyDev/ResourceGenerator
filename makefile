@@ -1,4 +1,6 @@
-ifneq ($(OS), Windows_NT)
+ifeq ($(OS), Windows_NT)
+  UNAME := Windows
+else
   UNAME := $(shell uname -s)
 endif
 
@@ -9,16 +11,15 @@ CXXFLAGS = -s -O3 -std=c++17 -DNDEBUG -D_FORTIFY_SOURCE=2 -fstack-protector-stro
 WARNINGS = -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wcast-qual -Wcast-align -Wfloat-equal -Wlogical-op -Wduplicated-cond -Wshift-overflow=2 -Wformat=2
 SYSTEM_INCLUDES = -isystemexternal/include -isystemexternal/include/stb
 LIBRARIES = -static
-ifeq ($(OS), Windows_NT)
+ifeq ($(UNAME), Windows)
   ECHO = echo -e
   OUTPUT = binary/windows/ResourceLoader.exe
+else ifeq ($(UNAME), Linux)
+  ECHO = echo
+  OUTPUT = binary/linux/ResourceLoader.out
+#else ifeq ($(UNAME), Darwin)
 else
-  ifeq ($(UNAME), Linux)
-    ECHO = echo
-    OUTPUT = binary/linux/ResourceLoader.out
-  endif
-  #ifeq ($(UNAME), Darwin)
-  #endif
+	$(error "Unknown OS")
 endif
 
 PROGRAM_SOURCE_DIRECTORY = program/source
