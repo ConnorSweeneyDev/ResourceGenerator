@@ -81,5 +81,5 @@ $(OUTPUT): $(OBJECTS)
 	@$(ECHO) "Link  | $(OBJECTS) -> $(OUTPUT)"
 
 clean:
-	@if [ -d "$(OBJECTS_DIRECTORY)" ]; then rm -r $(OBJECTS_DIRECTORY); fi
+	@if [ -d $(OBJECTS_DIRECTORY) ]; then rm -r $(OBJECTS_DIRECTORY); fi
 	@if [ -f $(OUTPUT) ]; then rm -r $(OUTPUT); fi
