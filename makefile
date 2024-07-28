@@ -18,8 +18,6 @@ else ifeq ($(UNAME), Linux)
   ECHO = echo
   OUTPUT = binary/linux/ResourceLoader.out
 #else ifeq ($(UNAME), Darwin)
-else
-	$(error Unsupported OS)
 endif
 
 PROGRAM_SOURCE_DIRECTORY = program/source
@@ -73,10 +71,10 @@ directories:
 	@if [ ! -d $(WINDOWS_DIRECTORY) ]; then mkdir -p $(WINDOWS_DIRECTORY); $(ECHO) "Write | $(WINDOWS_DIRECTORY)"; fi
 	@if [ ! -d $(LINUX_DIRECTORY) ]; then mkdir -p $(LINUX_DIRECTORY); $(ECHO) "Write | $(LINUX_DIRECTORY)"; fi
 
-$(OBJECTS_DIRECTORY)/%.o: $(PROGRAM_SOURCE_DIRECTORY)/%.cpp
+$(OBJECTS_DIRECTORY)/%.o: $(PROGRAM_SOURCE_DIRECTORY)/%.cpp | directories
 	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(SYSTEM_INCLUDES) -c $< -o $@
 	@$(ECHO) "CXX   | $< -> $@"
-$(OUTPUT): $(OBJECTS)
+$(OUTPUT): $(OBJECTS) | directories
 	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(SYSTEM_INCLUDES) $(OBJECTS) $(LIBRARIES) -o $(OUTPUT)
 	@$(ECHO) "Link  | $(OBJECTS) -> $(OUTPUT)"
 
