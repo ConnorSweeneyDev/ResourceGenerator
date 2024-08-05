@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 
+int main(int argc, char *argv[]);
 bool verify_arguments(int argc, char *argv[], std::string &generated_out_file_name,
                       std::string &generated_out_file_extension, std::string &postfix,
                       std::string &generated_out_file_content);
