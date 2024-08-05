@@ -48,7 +48,7 @@ NAMESPACE_INDENTATION := NamespaceIndentation: All
 NAMESPACE_COMMENTS := FixNamespaceComments: false
 INDENT_CASE_LABELS := IndentCaseLabels: true
 BREAK_TEMPLATE_DECLARATIONS := AlwaysBreakTemplateDeclarations: false
-FORMAT_FILES := $(wildcard $(PROGRAM_SOURCE_DIRECTORY)/*.cpp)
+FORMAT_FILES := $(wildcard $(PROGRAM_SOURCE_DIRECTORY)/*.cpp) $(wildcard $(PROGRAM_INCLUDE_DIRECTORY)/*.hpp)
 
 main: directories $(OUTPUT)
 external: compile_commands clang-format directories
