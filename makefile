@@ -24,6 +24,7 @@ else ifeq ($(UNAME), Linux)
 endif
 
 PROGRAM_SOURCE_DIRECTORY := program/source
+PROGRAM_INCLUDE_DIRECTORY := program/include
 BINARY_DIRECTORY := binary
 OBJECTS_DIRECTORY := binary/object
 CPP_SOURCES := $(wildcard $(PROGRAM_SOURCE_DIRECTORY)/*.cpp)
@@ -71,10 +72,13 @@ directories:
 	@if [ ! -d $(OBJECTS_DIRECTORY) ]; then mkdir -p $(OBJECTS_DIRECTORY); $(ECHO) "Write | $(OBJECTS_DIRECTORY)"; fi
 	@if [ ! -d $(TARGET_DIRECTORY) ]; then mkdir -p $(TARGET_DIRECTORY); $(ECHO) "Write | $(TARGET_DIRECTORY)"; fi
 
+$(OBJECTS_DIRECTORY)/%.o: $(PROGRAM_SOURCE_DIRECTORY)/%.cpp $(PROGRAM_INCLUDE_DIRECTORY)/%.hpp | directories
+	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(INCLUDES) $(SYSTEM_INCLUDES) -c $< -o $@
+	@$(ECHO) "CXX   | $< -> $@"
 $(OBJECTS_DIRECTORY)/%.o: $(PROGRAM_SOURCE_DIRECTORY)/%.cpp | directories
 	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(INCLUDES) $(SYSTEM_INCLUDES) -c $< -o $@
 	@$(ECHO) "CXX   | $< -> $@"
-$(OUTPUT): $(OBJECTS)
+$(OUTPUT): $(OBJECTS) | directories
 	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(INCLUDES) $(SYSTEM_INCLUDES) $(OBJECTS) $(LIBRARIES) -o $(OUTPUT)
 	@$(ECHO) "Link  | $(OBJECTS) -> $(OUTPUT)"
 
