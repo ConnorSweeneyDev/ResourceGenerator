@@ -7,7 +7,7 @@ endif
 DEBUG := 0
 CXX := g++
 ifeq ($(DEBUG), 1)
-  CXXFLAGS := -g -O2 -std=c++17 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fstack-protector-strong
+  CXXFLAGS := -g -O2 -std=c++17 -DDEBUG -D_FORTIFY_SOURCE=2 -fstack-protector-strong
 else
   CXXFLAGS := -s -O3 -std=c++17 -DNDEBUG -D_FORTIFY_SOURCE=2 -fstack-protector-strong
 endif
