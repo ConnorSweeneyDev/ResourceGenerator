@@ -9,13 +9,12 @@
 
 #include "main.hpp"
 
+std::string generated_out_file_name, generated_out_file_extension, generated_out_file_content,
+  postfix;
+
 int main(int argc, char *argv[])
 {
-  std::string generated_out_file_name, generated_out_file_extension, postfix,
-    generated_out_file_content;
-  if (!verify_arguments(argc, argv, generated_out_file_name, generated_out_file_extension, postfix,
-                        generated_out_file_content))
-    return 1;
+  if (!verify_arguments(argc, argv)) return 1;
 
   for (int index = 2; index < argc - 1; index++)
   {
@@ -23,17 +22,13 @@ int main(int argc, char *argv[])
     std::string resource_name, resource_extension;
     get_resource_file(resource_path, resource_name, resource_extension);
 
-    if (!generate_resource(generated_out_file_content, resource_path, resource_name,
-                           resource_extension, postfix, generated_out_file_extension))
-      return 1;
+    if (!generate_resource(resource_path, resource_name, resource_extension)) return 1;
   }
 
-  if (!write_to_output_file(generated_out_file_name, generated_out_file_content)) return 1;
+  if (!write_to_output_file()) return 1;
 }
 
-bool verify_arguments(int argc, char *argv[], std::string &generated_out_file_name,
-                      std::string &generated_out_file_extension, std::string &postfix,
-                      std::string &generated_out_file_content)
+bool verify_arguments(int argc, char *argv[])
 {
   if (argc < 3)
   {
@@ -94,10 +89,8 @@ void get_resource_file(const std::string &resource_path, std::string &resource_n
   resource_extension = resource_path.substr(period_pos + 1);
 }
 
-void generate_cpp_png_resource(std::string &generated_out_file_content,
-                               const std::string &resource_name, const std::string &postfix,
-                               const int &width, const int &height, const int &channels,
-                               unsigned char *data)
+void generate_cpp_png_resource(const std::string &resource_name, const int &width,
+                               const int &height, const int &channels, unsigned char *data)
 {
   std::string resource_out_file_content;
   resource_out_file_content +=
@@ -118,8 +111,7 @@ void generate_cpp_png_resource(std::string &generated_out_file_content,
   generated_out_file_content += resource_out_file_content;
 }
 
-void generate_hpp_png_resource(std::string &generated_out_file_content,
-                               const std::string &resource_name, const std::string &postfix)
+void generate_hpp_png_resource(const std::string &resource_name)
 {
   std::string resource_out_file_content;
   resource_out_file_content += "\nextern const int " + resource_name + postfix + "_width;\n";
@@ -130,10 +122,7 @@ void generate_hpp_png_resource(std::string &generated_out_file_content,
   generated_out_file_content += resource_out_file_content;
 }
 
-bool generate_png_resource(std::string &generated_out_file_content,
-                           const std::string &resource_path, std::string resource_name,
-                           const std::string &postfix,
-                           const std::string &generated_out_file_extension)
+bool generate_png_resource(const std::string &resource_path, std::string resource_name)
 {
   int width, height, channels;
   stbi_set_flip_vertically_on_load(true);
@@ -146,18 +135,15 @@ bool generate_png_resource(std::string &generated_out_file_content,
 
   resource_name = resource_name.substr(resource_name.find_last_of('/') + 1);
   if (generated_out_file_extension == "cpp")
-    generate_cpp_png_resource(generated_out_file_content, resource_name, postfix, width, height,
-                              channels, data);
+    generate_cpp_png_resource(resource_name, width, height, channels, data);
   else
-    generate_hpp_png_resource(generated_out_file_content, resource_name, postfix);
+    generate_hpp_png_resource(resource_name);
 
   stbi_image_free(data);
   return true;
 }
 
-void generate_cpp_text_resource(std::string &generated_out_file_content,
-                                const std::string &resource_path, const std::string &resource_name,
-                                const std::string &postfix)
+void generate_cpp_text_resource(const std::string &resource_path, const std::string &resource_name)
 {
   std::string resource_out_file_content;
   std::vector<unsigned char> buffer = read_text_file_as_binary(resource_path);
@@ -170,48 +156,37 @@ void generate_cpp_text_resource(std::string &generated_out_file_content,
                                 resource_out_file_content + "'\\0' };\n";
 }
 
-void generate_hpp_text_resource(std::string &generated_out_file_content,
-                                const std::string &resource_name, const std::string &postfix)
+void generate_hpp_text_resource(const std::string &resource_name)
 {
   std::string resource_out_file_content;
   resource_out_file_content += "\nextern const char " + resource_name + postfix + "[];\n";
   generated_out_file_content += resource_out_file_content;
 }
 
-void generate_text_resource(std::string &generated_out_file_content,
-                            const std::string &resource_path, std::string resource_name,
-                            const std::string &postfix,
-                            const std::string &generated_out_file_extension)
+void generate_text_resource(const std::string &resource_path, std::string resource_name)
 {
   std::string resource_out_file_content;
   resource_name = resource_name.substr(resource_name.find_last_of('/') + 1);
   if (generated_out_file_extension == "cpp")
-    generate_cpp_text_resource(generated_out_file_content, resource_path, resource_name, postfix);
+    generate_cpp_text_resource(resource_path, resource_name);
   else
-    generate_hpp_text_resource(generated_out_file_content, resource_name, postfix);
+    generate_hpp_text_resource(resource_name);
 }
 
-bool generate_resource(std::string &generated_out_file_content, const std::string &resource_path,
-                       const std::string &resource_name, const std::string &resource_extension,
-                       const std::string &postfix, const std::string &generated_out_file_extension)
+bool generate_resource(const std::string &resource_path, const std::string &resource_name,
+                       const std::string &resource_extension)
 {
   if (resource_extension == "png")
   {
-    if (!generate_png_resource(generated_out_file_content, resource_path, resource_name, postfix,
-                               generated_out_file_extension))
-      return false;
+    if (!generate_png_resource(resource_path, resource_name)) return false;
   }
   else
-  {
-    generate_text_resource(generated_out_file_content, resource_path, resource_name, postfix,
-                           generated_out_file_extension);
-  }
+    generate_text_resource(resource_path, resource_name);
 
   return true;
 }
 
-bool write_to_output_file(const std::string &generated_out_file_name,
-                          const std::string &generated_out_file_content)
+bool write_to_output_file()
 {
   std::ofstream generated_out_file(generated_out_file_name);
   if (!generated_out_file.is_open())
