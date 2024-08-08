@@ -18,8 +18,7 @@ int main(int argc, char *argv[])
 
   for (int index = 2; index < argc - 1; index++)
   {
-    std::string resource_path = argv[index];
-    std::string resource_name, resource_extension;
+    std::string resource_path = argv[index], resource_name, resource_extension;
     get_resource_file(resource_path, resource_name, resource_extension);
 
     if (!generate_resource(resource_path, resource_name, resource_extension)) return 1;
