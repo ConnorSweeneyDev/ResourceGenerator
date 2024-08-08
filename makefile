@@ -4,9 +4,13 @@ else
   UNAME := $(shell uname -s)
 endif
 
+DEBUG := 0
 CXX := g++
-CXXFLAGS := -s -O3 -std=c++17 -DNDEBUG -D_FORTIFY_SOURCE=2 -fstack-protector-strong
-#CXXFLAGS := -g -O2 -std=c++17 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fstack-protector-strong
+ifeq ($(DEBUG), 1)
+  CXXFLAGS := -g -O2 -std=c++17 -D_GLIBCXX_DEBUG -D_GLIBCXX_DEBUG_PEDANTIC -D_FORTIFY_SOURCE=2 -fstack-protector-strong
+else
+  CXXFLAGS := -s -O3 -std=c++17 -DNDEBUG -D_FORTIFY_SOURCE=2 -fstack-protector-strong
+endif
 
 WARNINGS := -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wcast-qual -Wcast-align -Wfloat-equal -Wlogical-op -Wduplicated-cond -Wshift-overflow=2 -Wformat=2
 INCLUDES := -Iprogram/include
@@ -26,12 +30,12 @@ endif
 PROGRAM_SOURCE_DIRECTORY := program/source
 PROGRAM_INCLUDE_DIRECTORY := program/include
 BINARY_DIRECTORY := binary
-OBJECTS_DIRECTORY := binary/object
-CPP_SOURCES := $(wildcard $(PROGRAM_SOURCE_DIRECTORY)/*.cpp)
-OBJECTS := $(patsubst $(PROGRAM_SOURCE_DIRECTORY)/%.cpp,$(OBJECTS_DIRECTORY)/%.o,$(CPP_SOURCES))
+OBJECT_DIRECTORY := binary/object
+CPP_SOURCE_FILES := $(wildcard $(PROGRAM_SOURCE_DIRECTORY)/*.cpp)
+OBJECT_FILES := $(patsubst $(PROGRAM_SOURCE_DIRECTORY)/%.cpp,$(OBJECT_DIRECTORY)/%.o,$(CPP_SOURCE_FILES))
 
-COMMANDS_DIRECTORY := compile_commands.json
-FORMAT_DIRECTORY := .clang-format
+COMPILE_COMMANDS_FILE := compile_commands.json
+CLANG_FORMAT_FILE := .clang-format
 STYLE := BasedOnStyle: LLVM
 TAB_WIDTH := IndentWidth: 2
 INITIALIZER_WIDTH := ConstructorInitializerIndentWidth: 2
@@ -55,33 +59,33 @@ main: directories $(OUTPUT)
 external: compile_commands clang-format directories
 
 compile_commands:
-	@$(ECHO) "[" > $(COMMANDS_DIRECTORY)
-	@for source in $(CPP_SOURCES); do $(ECHO) "\t{ \"directory\": \"$(CURDIR)\", \"command\": \"$(CXX) $(CXXFLAGS) $(WARNINGS) $(INCLUDES) $(SYSTEM_INCLUDES) -c $$source -o $(OBJECTS_DIRECTORY)/$$(basename $$source .cpp).o\", \"file\": \"$$source\" },"; done >> $(COMMANDS_DIRECTORY)
-	@sed -i "$$ s/,$$//" $(COMMANDS_DIRECTORY)
-	@$(ECHO) "]" >> $(COMMANDS_DIRECTORY)
-	@$(ECHO) "Write | $(COMMANDS_DIRECTORY)"
+	@$(ECHO) "[" > $(COMPILE_COMMANDS_FILE)
+	@for source in $(CPP_SOURCE_FILES); do $(ECHO) "\t{ \"directory\": \"$(CURDIR)\", \"command\": \"$(CXX) $(CXXFLAGS) $(WARNINGS) $(INCLUDES) $(SYSTEM_INCLUDES) -c $$source -o $(OBJECT_DIRECTORY)/$$(basename $$source .cpp).o\", \"file\": \"$$source\" },"; done >> $(COMPILE_COMMANDS_FILE)
+	@sed -i "$$ s/,$$//" $(COMPILE_COMMANDS_FILE)
+	@$(ECHO) "]" >> $(COMPILE_COMMANDS_FILE)
+	@$(ECHO) "Write | $(COMPILE_COMMANDS_FILE)"
 
 clang-format:
-	@$(ECHO) "---\n$(STYLE)\n$(TAB_WIDTH)\n$(INITIALIZER_WIDTH)\n$(CONTINUATION_WIDTH)\n$(BRACES)\n---\n$(LANGUAGE)\n$(LIMIT)\n$(BLOCKS)\n$(FUNCTIONS)\n$(IFS)\n$(LOOPS)\n$(CASE_LABELS)\n$(PP_DIRECTIVES)\n$(NAMESPACE_INDENTATION)\n$(NAMESPACE_COMMENTS)\n$(INDENT_CASE_LABELS)\n$(BREAK_TEMPLATE_DECLARATIONS)\n..." > $(FORMAT_DIRECTORY)
-	@$(ECHO) "Write | $(FORMAT_DIRECTORY)"
+	@$(ECHO) "---\n$(STYLE)\n$(TAB_WIDTH)\n$(INITIALIZER_WIDTH)\n$(CONTINUATION_WIDTH)\n$(BRACES)\n---\n$(LANGUAGE)\n$(LIMIT)\n$(BLOCKS)\n$(FUNCTIONS)\n$(IFS)\n$(LOOPS)\n$(CASE_LABELS)\n$(PP_DIRECTIVES)\n$(NAMESPACE_INDENTATION)\n$(NAMESPACE_COMMENTS)\n$(INDENT_CASE_LABELS)\n$(BREAK_TEMPLATE_DECLARATIONS)\n..." > $(CLANG_FORMAT_FILE)
+	@$(ECHO) "Write | $(CLANG_FORMAT_FILE)"
 	@for file in $(FORMAT_FILES); do clang-format -i $$file; done
 	@$(ECHO) "FMT   | $(FORMAT_FILES)"
 
 directories:
 	@if [ ! -d $(BINARY_DIRECTORY) ]; then mkdir -p $(BINARY_DIRECTORY); $(ECHO) "Write | $(BINARY_DIRECTORY)"; fi
-	@if [ ! -d $(OBJECTS_DIRECTORY) ]; then mkdir -p $(OBJECTS_DIRECTORY); $(ECHO) "Write | $(OBJECTS_DIRECTORY)"; fi
+	@if [ ! -d $(OBJECT_DIRECTORY) ]; then mkdir -p $(OBJECT_DIRECTORY); $(ECHO) "Write | $(OBJECT_DIRECTORY)"; fi
 	@if [ ! -d $(TARGET_DIRECTORY) ]; then mkdir -p $(TARGET_DIRECTORY); $(ECHO) "Write | $(TARGET_DIRECTORY)"; fi
 
-$(OBJECTS_DIRECTORY)/%.o: $(PROGRAM_SOURCE_DIRECTORY)/%.cpp $(PROGRAM_INCLUDE_DIRECTORY)/%.hpp | directories
+$(OBJECT_DIRECTORY)/%.o: $(PROGRAM_SOURCE_DIRECTORY)/%.cpp $(PROGRAM_INCLUDE_DIRECTORY)/%.hpp | directories
 	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(INCLUDES) $(SYSTEM_INCLUDES) -c $< -o $@
 	@$(ECHO) "CXX   | $< -> $@"
-$(OBJECTS_DIRECTORY)/%.o: $(PROGRAM_SOURCE_DIRECTORY)/%.cpp | directories
+$(OBJECT_DIRECTORY)/%.o: $(PROGRAM_SOURCE_DIRECTORY)/%.cpp | directories
 	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(INCLUDES) $(SYSTEM_INCLUDES) -c $< -o $@
 	@$(ECHO) "CXX   | $< -> $@"
-$(OUTPUT): $(OBJECTS) | directories
-	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(INCLUDES) $(SYSTEM_INCLUDES) $(OBJECTS) $(LIBRARIES) -o $(OUTPUT)
-	@$(ECHO) "Link  | $(OBJECTS) -> $(OUTPUT)"
+$(OUTPUT): $(OBJECT_FILES) | directories
+	@$(CXX) $(CXXFLAGS) $(WARNINGS) $(INCLUDES) $(SYSTEM_INCLUDES) $(OBJECT_FILES) $(LIBRARIES) -o $(OUTPUT)
+	@$(ECHO) "Link  | $(OBJECT_FILES) -> $(OUTPUT)"
 
 clean:
-	@if [ -d $(OBJECTS_DIRECTORY) ]; then rm -r $(OBJECTS_DIRECTORY); fi
+	@if [ -d $(OBJECT_DIRECTORY) ]; then rm -r $(OBJECT_DIRECTORY); fi
 	@if [ -f $(OUTPUT) ]; then rm -r $(OUTPUT); fi
