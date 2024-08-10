@@ -9,9 +9,6 @@
 
 #include "main.hpp"
 
-std::string generated_out_file_name, generated_out_file_extension, generated_out_file_content,
-  postfix;
-
 int main(int argc, char *argv[])
 {
   if (!verify_arguments(argc, argv)) return 1;

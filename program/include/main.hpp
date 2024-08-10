@@ -3,6 +3,9 @@
 #include <string>
 #include <vector>
 
+inline std::string generated_out_file_name, generated_out_file_extension,
+  generated_out_file_content, postfix;
+
 int main(int argc, char *argv[]);
 bool verify_arguments(int argc, char *argv[]);
 
