@@ -1,4 +1,5 @@
 DEBUG := 0
+
 CXX := g++
 ifeq ($(DEBUG), 1)
   CXXFLAGS := -g -O2 -std=c++17 -DDEBUG -D_FORTIFY_SOURCE=2 -fstack-protector-strong
