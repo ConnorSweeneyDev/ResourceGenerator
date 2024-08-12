@@ -6,7 +6,6 @@ else ifeq ($(UNAME), Linux)
   ECHO := echo
   TARGET_DIRECTORY := binary/linux
   OUTPUT_FILE := $(TARGET_DIRECTORY)/ResourceLoader.out
-#else ifeq ($(UNAME), Darwin)
 endif
 
 PROGRAM_SOURCE_DIRECTORY := program/source
