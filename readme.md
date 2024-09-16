@@ -1,21 +1,15 @@
-# ResourceLoader
-A small executable that reads all the files supplied to it and outputs them as const char arrays in
-a c++ compilation unit.
+# Building and Executing
+This project is optimized to be built with the following targets in mind:
+- Windows 11 MinGW 64-bit GCC 14.2.0
+- Ubuntu 18.04 GLIBC Version 2.27
 
-## Usage
-`<postfix> <resource1> <resource2> ... <resourceN> <outfile>`
+Version information for dependencies can be found in `external/version_info.txt`.
 
-- `<postfix>`: The postfix to append to each constexpr char array name, e.g. `_resource`.
-- `<resource1> <resource2> ... <resourceN>`: The files to be read, text files or png files.
-- `<outfile>`: The `.hpp` or `.cpp` file to write the output to, can be a path to a file or just a
-  filename.
+On both Windows and Linux any libraries used are all statically linked.
 
-Run it once with the desired header file path and once with the desired source file path, keeping
-all the other arguments the same.
-
-## Building
-This can be built on windows or linux using the scripts in the `script` directory, but I have
-already built it on the releases page which should work for most systems.
+After following the platform specific instructions below you can execute the `build.bat` file on
+Windows or the `build.sh` file on Linux from the root of the project to build the binary. The
+outputted binary must be run from the root to work as intended.
 
 ### Windows
 Do the following to ensure your environment is set up correctly:
@@ -29,3 +23,14 @@ Do the following to ensure your environment is set up correctly:
 ### Linux
 - Only run `sudo apt update && sudo apt upgrade` if you haven't already.
 - Run `sudo apt install git g++ make`.
+
+# Usage
+`<postfix> <resource1> <resource2> ... <resourceN> <outfile>`
+
+- `<postfix>`: The postfix to append to each constexpr char array name, e.g. `_resource`.
+- `<resource1> <resource2> ... <resourceN>`: The files to be read, text files or png files.
+- `<outfile>`: The `.hpp` or `.cpp` file to write the output to, can be a path to a file or just a
+  filename.
+
+Run it once with the desired header file path and once with the desired source file path, keeping
+all the other arguments the same.
