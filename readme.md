@@ -20,7 +20,9 @@ already built it on the releases page which should work for most systems.
 ### Windows
 You'll need any 64-bit [MinGW](https://winlibs.com/) installation with clang/LLVM support in your
 path, this will give you access to the unix tools that are used in the makefile. In addition, you
-will need Python3 for parallel build support - `winget install --id Python.Python.3.12`.
+will need Python3 for parallel build support - `winget install --id Python.Python.3.10`, and the
+batch files assume you have pwsh.exe installed - `winget install --id Microsoft.Powershell --source
+winget`.
 
 ### Linux
 - Only run `sudo apt update && sudo apt upgrade` if you haven't already.
