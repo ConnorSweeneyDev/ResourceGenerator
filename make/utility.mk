@@ -1,4 +1,8 @@
 COMPILE_COMMANDS_FILE := compile_commands.json
+CLANGD_FILE := .clangd
+UNUSED_INCLUDES := UnusedIncludes: Strict
+MISSING_INCLUDES := MissingIncludes: Strict
+IGNORE_HEADERS := IgnoreHeader: [tpl.hpp, inl.hpp]
 CLANG_FORMAT_FILE := .clang-format
 STYLE := BasedOnStyle: LLVM
 TAB_WIDTH := IndentWidth: 2
@@ -25,6 +29,10 @@ compile_commands:
 	@sed -i "$$ s/,$$//" $(COMPILE_COMMANDS_FILE)
 	@$(ECHO) "]" >> $(COMPILE_COMMANDS_FILE)
 	@$(ECHO) "Write | $(COMPILE_COMMANDS_FILE)"
+
+clangd:
+	@$(ECHO) "Diagnostics:\n  $(UNUSED_INCLUDES)\n  $(MISSING_INCLUDES)\n  Includes:\n    $(IGNORE_HEADERS)" > $(CLANGD_FILE)
+	@$(ECHO) "Write | $(CLANGD_FILE)"
 
 clang-format:
 	@$(ECHO) "---\n$(STYLE)\n$(TAB_WIDTH)\n$(INITIALIZER_WIDTH)\n$(CONTINUATION_WIDTH)\n$(BRACES)\n---\n$(LANGUAGE)\n$(LIMIT)\n$(BLOCKS)\n$(FUNCTIONS)\n$(IFS)\n$(LOOPS)\n$(CASE_LABELS)\n$(PP_DIRECTIVES)\n$(NAMESPACE_INDENTATION)\n$(NAMESPACE_COMMENTS)\n$(INDENT_CASE_LABELS)\n$(BREAK_TEMPLATE_DECLARATIONS)\n..." > $(CLANG_FORMAT_FILE)
