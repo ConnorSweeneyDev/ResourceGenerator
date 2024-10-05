@@ -1,3 +1,3 @@
 @ECHO OFF
 
-start pwsh -Command "gdb ./binary/windows/ResourceLoader.exe"
+START pwsh -Command "gdb ./binary/windows/ResourceLoader.exe"
