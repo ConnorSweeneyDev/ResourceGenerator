@@ -8,4 +8,8 @@ endif
 WARNINGS := -Wall -Wextra -Wpedantic -Wconversion -Wshadow -Wcast-qual -Wcast-align -Wfloat-equal -Wlogical-op -Wduplicated-cond -Wshift-overflow=2 -Wformat=2
 INCLUDES := -Iprogram/include
 SYSTEM_INCLUDES := -isystemexternal/include -isystemexternal/include/stb
-LIBRARIES := -static
+ifeq ($(UNAME), Windows)
+  LIBRARIES := -static -lgcc -lstdc++ -lssp
+else ifeq ($(UNAME), Linux)
+  LIBRARIES := -static -ldl -lm -lc -lgcc -lstdc++ -Wl,-rpath,'$$ORIGIN'
+endif
