@@ -1,9 +1,5 @@
 @ECHO OFF
 
-IF "%1" == "-wezterm" (
-  SET TERM=wezterm cli spawn --cwd %CD% pwsh -Command
-) ELSE (
-  SET TERM=pwsh -Command
-)
-
-%TERM% "./binary/windows/ResourceLoader.exe _resource assets/vertex_shader.glsl assets/lamp.png assets/background1.png output.cpp && ./binary/windows/ResourceLoader.exe _resource assets/vertex_shader.glsl assets/lamp.png assets/background1.png output.hpp"
+SET COMMAND=binary/windows/ResourceLoader.exe _resource assets/vertex_shader.glsl assets/lamp.png assets/background1.png output
+IF "%1" == "-wezterm" (wezterm cli spawn --cwd %CD% pwsh -Command "./%COMMAND%.cpp && ./%COMMAND%.hpp")
+IF "%1" == "" (cmd /C "start %COMMAND%.cpp && start %COMMAND%.hpp")
