@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gdb -tui ./binary/linux/ResourceLoader.out
+gdb -tui ./binary/linux/ResourceGenerator.out

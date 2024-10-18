@@ -1,5 +1,5 @@
 # Usage
-`<postfix> <resource1> <resource2> ... <resourceN> <outfile>`
+`./ResourceGenerator.[exe|out] <postfix> <resource1> <resource2> ... <resourceN> <outfile>`
 
 - `<postfix>`: The postfix to append to each constexpr char array name, e.g. `_resource`.
 - `<resource1> <resource2> ... <resourceN>`: The files to be read, text files or png files.
