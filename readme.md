@@ -2,7 +2,7 @@
 `./ResourceGenerator.[exe|out] <postfix> <resource1> <resource2> ... <resourceN> <outfile>`
 
 - `<postfix>`: The postfix to append to each constexpr char array name, e.g. `_resource`.
-- `<resource1> <resource2> ... <resourceN>`: The files to be read, text files or png files.
+- `<resource1> <resource2> ... <resourceN>`: The files to be read, glsl files or png files.
 - `<outfile>`: The `.hpp` or `.cpp` file to write the output to, can be a path to a file or just a filename.
 
 Run it once with the desired header file path and once with the desired source file path, keeping all the other

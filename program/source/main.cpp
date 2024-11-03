@@ -1,7 +1,11 @@
+#include <algorithm>
+#include <cstddef>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
+#include <string>
 #include <vector>
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -167,6 +171,13 @@ void generate_text_resource(const std::string &resource_path, std::string resour
 bool generate_resource(const std::string &resource_path, const std::string &resource_name,
                        const std::string &resource_extension)
 {
+  std::vector<std::string> valid_extensions = {"png", "glsl"};
+  if (std::find(valid_extensions.begin(), valid_extensions.end(), resource_extension) == valid_extensions.end())
+  {
+    std::cout << "Invalid resource extension: " << resource_extension << std::endl;
+    return false;
+  }
+
   if (resource_extension == "png")
   {
     if (!generate_png_resource(resource_path, resource_name)) return false;
