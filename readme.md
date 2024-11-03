@@ -1,5 +1,9 @@
 # Usage
-`./ResourceGenerator.[exe|out] <postfix> <resource1> <resource2> ... <resourceN> <outfile>`
+This program is specifically designed as a helper to my
+[SimpleGameEngine](https://github.com/ConnorSweeneyDev/SimpleGameEngine), and is not intended to be portable for other
+projects.
+
+`./ResourceGenerator.[exe|out] <text_postfix> <png_postfix> <resource1> <resource2> ... <resourceN> <outfile>`
 
 - `<text_postfix>`: The postfix to append to each text resource name, e.g. `"_text"`.
 - `<png_postfix>`: The postfix to append to each png resource name, e.g. `"_png"`.
