@@ -148,13 +148,13 @@ void generate_cpp_text_resource(const std::string &resource_path, const std::str
     if ((i + 1) % 20 == 0) { resource_out_file_content += "\n"; }
   }
   generated_out_file_content +=
-    "\nconst char " + resource_name + text_postfix + "_source[] = {\n" + resource_out_file_content + "'\\0' };\n";
+    "\nconst char " + resource_name + text_postfix + "[] = {\n" + resource_out_file_content + "'\\0' };\n";
 }
 
 void generate_hpp_text_resource(const std::string &resource_name)
 {
   std::string resource_out_file_content;
-  resource_out_file_content += "\nextern const char " + resource_name + text_postfix + "_source[];\n";
+  resource_out_file_content += "\nextern const char " + resource_name + text_postfix + "[];\n";
   generated_out_file_content += resource_out_file_content;
 }
 
