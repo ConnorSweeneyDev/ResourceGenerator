@@ -95,12 +95,13 @@ void generate_cpp_png_resource(const std::string &resource_name, const int &widt
   std::string resource_out_file_content;
   resource_out_file_content += "\nconst unsigned char " + resource_name + "_array[] = {\n";
   size_t data_size = size_t(width * height * channels);
-  for (size_t i = 0; i < data_size; i++)
+  for (size_t index = 0; index < data_size; index++)
   {
-    resource_out_file_content += unsigned_char_to_hex(data[i]) + ", ";
-    if ((i + 1) % 20 == 0) { resource_out_file_content += "\n"; }
+    resource_out_file_content += unsigned_char_to_hex(data[index]);
+    if (index < data_size - 1) { resource_out_file_content += ", "; }
+    if ((index + 1) % 16 == 0 && index < data_size - 1) { resource_out_file_content += "\n"; }
   }
-  resource_out_file_content += "'\\0' };\n";
+  resource_out_file_content += " };\n";
   resource_out_file_content += "const object::Texture_data " + resource_name + png_postfix + " = { ";
   resource_out_file_content += resource_name + "_array, ";
   resource_out_file_content += std::to_string(width) + ", ";
@@ -142,10 +143,11 @@ void generate_cpp_text_resource(const std::string &resource_path, const std::str
 {
   std::string resource_out_file_content;
   std::vector<unsigned char> buffer = read_text_file_as_binary(resource_path);
-  for (size_t i = 0; i < buffer.size(); i++)
+  size_t data_size = buffer.size();
+  for (size_t index = 0; index < data_size; index++)
   {
-    resource_out_file_content += unsigned_char_to_hex(buffer[i]) + ", ";
-    if ((i + 1) % 20 == 0) { resource_out_file_content += "\n"; }
+    resource_out_file_content += unsigned_char_to_hex(buffer[index]) + ", ";
+    if ((index + 1) % 16 == 0) { resource_out_file_content += "\n"; }
   }
   generated_out_file_content +=
     "\nconst char " + resource_name + text_postfix + "[] = {\n" + resource_out_file_content + "'\\0' };\n";
