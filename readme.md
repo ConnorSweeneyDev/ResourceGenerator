@@ -22,16 +22,14 @@ Version information for dependencies can be found in `external/version_info.txt`
 
 On both Windows and Linux any libraries used are all statically linked.
 
-After following the platform specific instructions below you can execute the `build.bat` file on Windows or the
-`build.sh` file on Linux from the root of the project to build the binary. The outputted binary must be run from the
-root to work as intended.
+After following the platform specific instructions below you can execute `script/build.sh` followed by `script/run.sh`
+from the root of the project to build and run the project.
 
 ### Windows
 Do the following to ensure your environment is set up correctly:
 - Ensure that you have `[PATH_TO_GIT_INSTALLATION]/bin` in your path.
 - Download a 64-bit [MinGW](https://winlibs.com/) distribution with Clang/LLVM support and put the `[DISTRIBUTION]/bin`
   directory in your path.
-- Run `winget install --id Microsoft.Powershell --source winget` if you don't have pwsh.exe installed.
 - Run `winget install make --source winget` if you don't have Make installed.
 
 ### Linux

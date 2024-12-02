@@ -1,6 +1,13 @@
 #!/bin/bash
 
-FLAGS="-f make/main.mk"
+FLAGS="-s -f make/main.mk"
+
 CLEAN="clean $FLAGS"
 
-make $CLEAN
+if [ "$OS" == "Windows_NT" ]; then
+  make $CLEAN
+elif [ "$(uname)" == "Linux" ]; then
+  make $CLEAN
+else
+  echo "Unsupported OS"
+fi
