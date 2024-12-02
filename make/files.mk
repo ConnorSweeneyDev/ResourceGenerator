@@ -1,9 +1,7 @@
 ifeq ($(UNAME), Windows)
-  ECHO := echo -e
   BINARY_PLATFORM_DIRECTORY := binary/windows
   OUTPUT_FILE := $(BINARY_PLATFORM_DIRECTORY)/ResourceGenerator.exe
 else ifeq ($(UNAME), Linux)
-  ECHO := echo
   BINARY_PLATFORM_DIRECTORY := binary/linux
   OUTPUT_FILE := $(BINARY_PLATFORM_DIRECTORY)/ResourceGenerator.out
 endif
