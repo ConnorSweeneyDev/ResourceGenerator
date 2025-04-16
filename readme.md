@@ -31,12 +31,12 @@ Do the following to ensure your environment is set up correctly:
 - Ensure that you have either [MSVC](https://visualstudio.microsoft.com/downloads/) or [MinGW](https://www.winlibs.com/)
   installed.
 - Ensure that you have CMake installed, you can run `winget install Kitware.CMake` if you don't.
-- Ensure that you have LLVM installed, you can run `winget install LLVM.LLVM` if you don't (for language server and
-  clang-format support).
+- Ensure that you have LLVM installed, you can run `winget install LLVM.LLVM` and put the install location in your
+  environment variables if you don't (for language server and clang-format support).
 
 ### Linux
 - Only run `sudo apt update && sudo apt upgrade` if you haven't already.
-- Run `sudo apt install git g++ cmake llvm`.
+- Run `sudo apt install cmake llvm clang-format`.
 
 # Updating Libraries
 All libraries can be updated by replacing the existing files in the `external` directory with new ones.
