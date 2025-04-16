@@ -42,5 +42,5 @@ Do the following to ensure your environment is set up correctly:
 All libraries can be updated by replacing the existing files in the `external` directory with new ones.
 
 ### stb
-Go to the stb_image.h [file](https://github.com/nothings/stb/blob/master/stb_image.h) and download it as a raw file,
-then replace the file in `external/include/stb` directory with that file.
+Download [stb_image.h](https://github.com/nothings/stb/blob/master/stb_image.h) as a raw file, then replace the file in
+`external/include/stb` directory with that.
