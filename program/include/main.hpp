@@ -1,28 +1,29 @@
 #pragma once
 
+#include <filesystem>
 #include <string>
 #include <vector>
 
-inline std::string generated_out_file_name, generated_out_file_extension, generated_out_file_content, text_postfix,
-  png_postfix;
+struct Resource
+{
+  std::filesystem::path path = "";
+  std::string name = "";
+  std::string extension = "";
+  std::vector<unsigned char> binary = {};
+  int width = 0;
+  int height = 0;
+  int channels = 0;
+};
+
+struct Configuration
+{
+  std::vector<Resource> resources = {};
+  std::filesystem::path path = {};
+  std::string name = "";
+  std::string extension = "";
+  std::string text_postfix = "";
+  std::string image_postfix = "";
+};
 
 int main(int argc, char *argv[]);
-bool verify_arguments(int argc, char *argv[]);
-
-std::string unsigned_char_to_hex(unsigned char ch);
-std::vector<unsigned char> read_text_file_as_binary(const std::string &file_path);
-
-void get_resource_file(const std::string &resource_path, std::string &resource_name, std::string &resource_extension);
-
-void generate_cpp_png_resource(const std::string &resource_name, const int &width, const int &height,
-                               const int &channels, unsigned char *data);
-void generate_hpp_png_resource(const std::string &resource_name);
-bool generate_png_resource(const std::string &resource_path, std::string resource_name);
-
-void generate_cpp_text_resource(const std::string &resource_path, const std::string &resource_name);
-void generate_hpp_text_resource(const std::string &resource_name);
-void generate_text_resource(const std::string &resource_path, std::string resource_name);
-
-bool generate_resource(const std::string &resource_path, const std::string &resource_name,
-                       const std::string &resource_extension);
-bool write_to_output_file();
+std::string unsigned_char_to_hex(unsigned char character);

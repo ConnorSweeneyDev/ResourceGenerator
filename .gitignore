@@ -7,15 +7,9 @@
 *.o
 *.obj
 
-# Generated clangd files
+# Generated Clangd Files
 compile_commands.json
-.clangd
-.clang-format
 .cache
-
-# Generated files
-output.hpp
-output.cpp
 
 # Precompiled Headers
 *.gch
@@ -24,10 +18,13 @@ output.cpp
 # Compiled Dynamic libraries
 *.dylib
 
-# Fortran module files
+# Fortran Module Files
 *.mod
 *.smod
 
-# Executables
-*.exe
-*.out
+# Build Output
+build/
+
+# Executable Output
+output.cpp
+output.hpp
