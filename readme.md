@@ -35,8 +35,13 @@ Do the following to ensure your environment is set up correctly:
   environment variables if you don't (for language server and clang-format support).
 
 ### Linux
-- Only run `sudo apt update && sudo apt upgrade` if you haven't already.
-- Run `sudo apt install cmake llvm clang-format`.
+Do the following on Ubuntu 22.04 to ensure your environment is set up correctly:
+- Run `sudo apt update && sudo apt upgrade`.
+- Run `sudo apt install llvm clang-format`.
+- Run `mkdir ~/temp_cmake && cd ~/temp_cmake && wget https://cmake.org/files/v4.0/cmake-4.0.1-linux-x86_64.sh && sudo
+  mkdir /opt/cmake && sudo sh cmake-4.0.1-linux-x86_64.sh --prefix=/opt/cmake && sudo ln -s
+  /opt/cmake/cmake-4.0.1-linux-x86_64/bin/cmake /usr/local/bin/cmake && cd ~ && rm -rf temp_cmake` and say yes to
+  everything.
 
 # Updating Libraries
 All libraries can be updated by replacing the existing files in the `external` directory with new ones.
