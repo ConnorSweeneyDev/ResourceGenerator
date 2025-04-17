@@ -12,8 +12,12 @@ set(BUILD_SHARED_LIBS OFF)
 set(CMAKE_CXX_STANDARD 20)
 if(MSVC)
   set(WARNINGS "/W4")
-  set(OPTIMIZATIONS "/MT")
-  set(LINKER_FLAGS "/INCREMENTAL:NO" "/NODEFAULTLIB:MSVCRT")
+  if("${CMAKE_BUILD_TYPE}" MATCHES "Debug")
+    set(OPTIMIZATIONS "/MTd")
+  else()
+    set(OPTIMIZATIONS "/MT")
+  endif()
+  set(LINKER_FLAGS "/INCREMENTAL:NO")
 elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
   set(
     WARNINGS
@@ -44,7 +48,7 @@ elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU")
     "-Wshift-overflow=2"
     "-Wformat=2"
   )
-  if(${CMAKE_BUILD_TYPE} MATCHES "Debug")
+  if("${CMAKE_BUILD_TYPE}" MATCHES "Debug")
     set(OPTIMIZATIONS "-g" "-Og")
   else()
     set(OPTIMIZATIONS "-s" "-O3")
