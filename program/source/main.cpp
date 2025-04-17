@@ -58,7 +58,7 @@ int main(int argc, char *argv[])
   std::string path = argv[argc - 1];
   std::string name = "";
   if (path.find_last_of("/") != std::string::npos)
-    name = path.substr(path.find_last_of("/") + 1, path.find_last_of("."));
+    name = path.substr(path.find_last_of("/") + 1, path.find_last_of(".") - path.find_last_of("/") - 1);
   else
     name = path.substr(0, path.find_last_of("."));
   std::string extension = path.substr(path.find_last_of(".") + 1);
