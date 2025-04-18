@@ -19,7 +19,7 @@ This project is optimized to be built with the following targets in mind:
 - Windows 10/11:
   - MSVC
   - MinGW 64-bit GCC
-- Ubuntu 22.04 GLIBC Version 2.35
+- Ubuntu 22.04 GLIBC Version 2.35 GCC
 
 Version information for dependencies can be found in `external/version_info.txt`.
 
