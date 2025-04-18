@@ -43,9 +43,9 @@ Do the following on Ubuntu 22.04 to ensure your environment is set up correctly:
   /opt/cmake/cmake-4.0.1-linux-x86_64/bin/cmake /usr/local/bin/cmake && cd ~ && rm -rf temp_cmake` and say yes to
   everything.
 
-# Updating Libraries
-All libraries can be updated by replacing the existing files in the `external` directory with new ones.
+# Updating Dependencies
+All dependencies can be updated by replacing the existing files in the `external` directory with new ones.
 
-### stb
+### STB
 Download [stb_image.h](https://github.com/nothings/stb/blob/master/stb_image.h) as a raw file, then replace the file in
 `external/include/stb` directory with that.
