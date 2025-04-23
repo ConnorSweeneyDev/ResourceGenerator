@@ -50,4 +50,4 @@ All dependencies can be updated by replacing the existing files in the `external
 
 ### STB
 Download [stb_image.h](https://github.com/nothings/stb/blob/master/stb_image.h) as a raw file, then replace the file in
-`external/include/stb` directory with that.
+`external/stb/include/stb` directory with that.
