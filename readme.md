@@ -14,40 +14,19 @@ projects.
 Run it once with the desired header file path and once with the desired source file path, keeping all the other
 arguments the same.
 
-# Building and Executing
-This project is optimized to be built with the following targets in mind:
-- Windows 10/11:
-  - MSVC
-  - MinGW 64-bit GCC
-- Ubuntu 22.04 GLIBC Version 2.35 GCC
+# How to Build
+This project is optimized to be built on Windows with MSVC.
 
-Version information for dependencies can be found in `external/version_info.txt`.
+1. Ensure that you have [MSVC](https://visualstudio.microsoft.com/downloads/) installed.
+2. Ensure that you have CMake installed, you can run `winget install Kitware.CMake` if you don't.
+3. Ensure that you have LLVM installed, you can run `winget install LLVM.LLVM` and put the install location in your
+   environment variables if you don't (for language server and clang-format support).
+4. Execute `script/build.sh` followed by `script/run.sh`.
 
-After following the platform specific instructions below you can execute `script/build.sh` followed by `script/run.sh`
-from the root of the project to build and run the project.
-
-### Windows
-Do the following to ensure your environment is set up correctly:
-- Ensure that you have either [MSVC](https://visualstudio.microsoft.com/downloads/) or [MinGW](https://www.winlibs.com/)
-  installed.
-- Ensure that you have CMake installed, you can run `winget install Kitware.CMake` if you don't.
-- Ensure that you have LLVM installed, you can run `winget install LLVM.LLVM` and put the install location in your
-  environment variables if you don't (for language server and clang-format support).
-
-### Linux
-Do the following on Ubuntu 22.04 to ensure your environment is set up correctly:
-- Run `sudo apt update && sudo apt upgrade`.
-- Run `mkdir ~/temp_cmake && cd ~/temp_cmake && wget https://cmake.org/files/v4.0/cmake-4.0.1-linux-x86_64.sh && sudo
-  mkdir /opt/cmake && sudo sh cmake-4.0.1-linux-x86_64.sh --prefix=/opt/cmake && sudo ln -s
-  /opt/cmake/cmake-4.0.1-linux-x86_64/bin/cmake /usr/local/bin/cmake && cd ~ && rm -rf temp_cmake` and say yes to
-  everything.
-- Run `mkdir ~/temp_llvm && cd ~/temp_llvm && wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 19
-  && sudo apt install clang-format-19 && sudo ln -s /usr/lib/llvm-19/bin/clang-format /usr/bin/clang-format && cd ~ &&
-  rm -rf temp_llvm` and say yes to everything.
-
-# Updating Dependencies
-All dependencies can be updated by replacing the existing files in the `external` directory with new ones.
+# How to Update Dependencies
+All dependencies are vendored and stored in the `external` directory. Version information for dependencies can be found
+in `external/version_info.txt`.
 
 ### STB
-Download [stb_image.h](https://github.com/nothings/stb/blob/master/stb_image.h) as a raw file, then replace the file in
-`external/stb/include/stb` directory with that.
+1. Download [stb_image.h](https://github.com/nothings/stb/blob/master/stb_image.h) as a raw file.
+2. Put the file in `external/stb/include/stb`.
