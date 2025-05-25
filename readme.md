@@ -1,7 +1,7 @@
 # ResourceGenerator
 This program is specifically designed as a helper to my
-[SimpleGameEngine](https://github.com/ConnorSweeneyDev/SimpleGameEngine), and is not intended to be portable for other
-projects.
+[SimpleGameEngine](https://github.com/ConnorSweeneyDev/SimpleGameEngine), which is Windows only, and is not intended to
+be portable for other projects.
 
 ### Usage
 `./ResourceGenerator.[exe|out] <text_postfix> <image_postfix> <resource1> <resource2> ... <resourceN> <output>`
