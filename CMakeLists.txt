@@ -84,7 +84,10 @@ if(NOT "${IS_SUBDIRECTORY}")
 endif()
 
 add_executable("${OUTPUT}")
-add_dependencies("${OUTPUT}" ${DEPENDENCIES})
+if(DEFINED DEPENDENCIES)
+  add_dependencies("${OUTPUT}" ${DEPENDENCIES})
+endif()
+
 target_include_directories("${OUTPUT}" PRIVATE "${INCLUDE_DIRECTORIES}")
 target_include_directories("${OUTPUT}" SYSTEM PRIVATE "${SYSTEM_INCLUDE_DIRECTORIES}")
 target_sources("${OUTPUT}" PRIVATE "${HEADER_FILES}" "${SOURCE_FILES}")
