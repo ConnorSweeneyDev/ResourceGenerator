@@ -15,7 +15,7 @@ Run it once with the desired header file path and once with the desired source f
 arguments the same.
 
 # How to Build
-This project is optimized to be built on Windows with MSVC.
+This project is optimized to be built on Windows using MSVC.
 
 1. Ensure that you have [MSVC](https://visualstudio.microsoft.com/downloads/) installed.
 2. Ensure that you have [CMake](https://cmake.org/download/) installed, you can run `winget install Kitware.CMake` if
