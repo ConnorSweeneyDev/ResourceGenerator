@@ -4,7 +4,7 @@ This program is specifically designed as a helper to my
 be portable for other projects.
 
 ### Usage
-`./ResourceGenerator.[exe|out] <text_postfix> <image_postfix> <resource1> <resource2> ... <resourceN> <output>`
+`./ResourceGenerator.exe <text_postfix> <image_postfix> <resource1> <resource2> ... <resourceN> <output>`
 
 - `<text_postfix>`: The postfix to append to each text resource name, e.g. `_text`.
 - `<image_postfix>`: The postfix to append to each image resource name, e.g. `_image`.
