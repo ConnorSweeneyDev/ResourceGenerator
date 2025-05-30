@@ -1,5 +1,4 @@
 set(INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/program/include")
-set(SYSTEM_INCLUDE_DIRECTORIES "${CMAKE_CURRENT_SOURCE_DIR}/external/stb/include")
 file(GLOB HEADER_FILES "${CMAKE_CURRENT_SOURCE_DIR}/program/include/*.*")
 file(GLOB SOURCE_FILES "${CMAKE_CURRENT_SOURCE_DIR}/program/source/*.*")
 source_group("Header Files" FILES "${HEADER_FILES}")
